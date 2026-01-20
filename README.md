@@ -129,7 +129,7 @@ There is a need for a **smart ticket validation system** that can:
 ---
 
 ## 10. Project Structure
-SmartBusProject/
+PMPML/
 │
 ├── app.py
 ├── README.md
@@ -196,4 +196,5 @@ Real-world public transport system simulation
 - Name: Shubhangi Chavan
 - Project Type: Academic / Learning Project
 - Technology: Flask (Python)
+
 
