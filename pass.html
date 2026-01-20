@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Bus Pass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            margin-bottom: 15px;
+        }
+        .pass-info {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #fff;
+            color: #0072ff;
+            padding: 10px 18px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #0072ff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🎟 Daily Bus Pass</h2>
+
+        {% if daily_pass %}
+        <div class="pass-info">
+            <p><strong>Pass ID:</strong> {{ daily_pass.id if daily_pass.id else daily_pass["id"] }}</p>
+            <p><strong>Expiry:</strong> {{ daily_pass.expiry if daily_pass.expiry else daily_pass["expiry"] }}</p>
+        </div>
+        {% else %}
+        <p>No active daily pass found.</p>
+        {% endif %}
+
+        <a href="/" class="btn"> Home</a>
+    </div>
+</body>
+</html>

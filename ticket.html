@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Tickets</title>
+</head>
+<body>
+
+<h2>All Tickets</h2>
+
+<div class="ticket-list-container">
+  {% if tickets %}
+    {% for t in tickets|reverse %}
+      <div>
+        <p><b>Date & Time:</b> {{ t["time"] }}</p>
+        <p><b>Ticket ID:</b> {{ t["id"] }}</p>
+        <p><b>Route:</b> {{ t.route_name }}</p>
+        <p><b>Source:</b> {{ t.source_name }}</p>
+        <p><b>Destination:</b> {{ t.destination_name }}</p>
+        <p><b>Amount:</b> ₹{{ t["amount"] }}</p>
+        <p>
+          <b>Status:</b>
+          <span id="status-{{ t['id'] }}">Checking...</span>
+        </p>
+        <hr>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No tickets available.</p>
+  {% endif %}
+</div>
+
+<p><a href="{{ url_for('home') }}">⬅ Back to Home</a></p>
+
+<script>
+/* Convert tickets from Jinja to JS safely */
+let tickets = {{ tickets | tojson | safe }};
+
+/* GPS tolerance (~50 meters) */
+const GPS_TOLERANCE = 0.0005;
+
+
+/* ADDED PART START */
+
+
+let lastUpdateTime = Date.now();
+let networkLost = false;
+
+/* thresholds */
+const GPS_TIMEOUT = 10000; // 10 seconds
+
+/* Detect network loss */
+window.addEventListener("offline", () => {
+    networkLost = true;
+});
+
+window.addEventListener("online", () => {
+    networkLost = false;
+    lastUpdateTime = Date.now();
+});
+
+/* Check lag every 3 seconds */
+setInterval(() => {
+    let now = Date.now();
+
+    tickets.forEach(ticket => {
+        let el = document.getElementById("status-" + ticket.id);
+        if (!el) return;
+
+        if (networkLost) {
+            el.innerText = "NETWORK LOST";
+            return;
+        }
+
+        if (now - lastUpdateTime > GPS_TIMEOUT) {
+            el.innerText = "GPS NOT RESPONDING";
+            return;
+        }
+    });
+}, 3000);
+
+/* Simulate movement along stops for testing */
+function simulateTicket(ticket) {
+    if (!ticket.route_stops || ticket.route_stops.length === 0) return;
+
+    let currentIndex = 0; // start at first stop
+
+    let interval = setInterval(() => {
+        lastUpdateTime = Date.now(); // ✅ added (GPS update)
+
+        if (currentIndex >= ticket.route_stops.length) {
+            document.getElementById("status-" + ticket.id).innerText = "❌ INVALID";
+            clearInterval(interval);
+            return;
+        }
+
+        let stop = ticket.route_stops[currentIndex];
+        let stopLat = parseFloat(stop.latitude);
+        let stopLng = parseFloat(stop.longitude);
+
+        let el = document.getElementById("status-" + ticket.id);
+        if (el) {
+            el.innerText = "✅ VALID";
+        }
+
+        fetch("/live_location", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ticket_id: ticket.id,
+                latitude: stopLat,
+                longitude: stopLng
+            })
+        }).catch(err => console.error("Fetch error:", err));
+
+        currentIndex++;
+    }, 2000);
+}
+
+/* Start simulation for all tickets */
+tickets.forEach(ticket => simulateTicket(ticket));
+
+</script>
+
+</body>
+</html>

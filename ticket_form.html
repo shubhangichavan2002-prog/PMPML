@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Ticket</title>
+</head>
+<body>
+  <div class="ticket-box"></div>
+  <h2>Create Bus Ticket</h2>
+
+  <!-- Current Date & Time -->
+  <p id="datetime"></p>
+
+  <form method="POST" action="/ticket_form">
+    <!-- Route -->
+    <label>Route:</label>
+    <select name="route" id="route" required>
+      <option value="">-- Select Route --</option>
+      {% for r in routes %}
+        <option value="{{ r.route_id }}">{{ r.route_name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+  <!-- Source Stop -->
+<label>Source:</label>
+<select name="source" id="source" required>
+  <option value="">-- Select Source Stop --</option>
+</select><br><br>
+
+<!-- Destination Stop -->
+<label>Destination:</label>
+<select name="destination" id="destination" required>
+  <option value="">-- Select Destination Stop --</option>
+</select><br><br>
+>
+
+    <!-- Ticket Price -->
+    <p>Ticket Price: ₹ <span id="amount">20</span></p>
+    <input type="hidden" name="amount" id="amount_input" value="20">
+
+    <button type="submit">Generate Ticket</button>
+  </form>
+</div>
+
+<script>
+  // Show date & time
+  function updateDateTime() {
+    document.getElementById("datetime").innerText =
+      new Date().toLocaleString();
+  }
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+
+  // Change price based on route AND update stops dynamically
+  document.getElementById("route").addEventListener("change", function() {
+    let price = 20;
+    if (this.value === "2") price = 30; // route_id = 2
+    else if (this.value === "3") price = 25; // route_id = 3
+    document.getElementById("amount").innerText = price;
+    document.getElementById("amount_input").value = price;
+
+    // ---------------- Dynamic stops for selected route ----------------
+    const routeId = this.value;
+    if (!routeId) return;
+
+    fetch("/get_route_stops/" + routeId)
+      .then(res => res.json())
+      .then(data => {
+        const sourceSelect = document.getElementById("source");
+        const destSelect = document.getElementById("destination");
+
+        // Clear previous options
+        sourceSelect.innerHTML = '<option value="">-- Select Source Stop --</option>';
+        destSelect.innerHTML = '<option value="">-- Select Destination Stop --</option>';
+
+        // Add stops from route
+        data.stops.forEach(stop => {
+          const option1 = document.createElement("option");
+          option1.value = stop.stop_id;
+          option1.text = stop.stop_name;
+          sourceSelect.appendChild(option1);
+
+          const option2 = document.createElement("option");
+          option2.value = stop.stop_id;
+          option2.text = stop.stop_name;
+          destSelect.appendChild(option2);
+        });
+      });
+  });
+</script>
+
+</body>
+</html>

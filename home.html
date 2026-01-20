@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bus App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="home-page">  <!-- add this class -->
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <span class="logo">🚌 PMPML</span>
+    <div class="icons">
+      <span>🔔</span>
+      <span>👤</span>
+    </div>
+  </nav>
+<div class="b1">
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" placeholder="कुठे जायचे आहे?" />
+  </div>
+
+  <!-- Buttons -->
+  <div class="card-container">
+    <a href="/ticket_form" class="btn">Bus Ticket</a>
+    <form action="/daily_pass" method="post">
+      <button type="submit" class="btn">Daily Pass</button>
+    </form>
+    <a href="/view_ticket" class="btn">View Ticket</a>
+    <a href="/view_pass" class="btn">View Daily Pass</a>
+  </div>
+  </div>
+</body>
+</html>
