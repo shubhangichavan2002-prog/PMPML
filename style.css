@@ -1,0 +1,275 @@
+/* ===== LOGIN PAGE (default body) ===== */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  background: linear-gradient(135deg, #0097a7, #7ae0eb);
+  font-family: Arial, sans-serif;
+}
+
+/* Login Container */
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 320px;
+  animation: fadeIn 0.8s ease;
+}
+
+/* Heading */
+.container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Inputs */
+.container input[type="text"],
+.container input[type="password"] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.container input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 5px rgba(37,117,252,0.5);
+}
+
+/* Button */
+.container button {
+  width: 95%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #2575fc;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container button:hover {
+  background: #1b5edb;
+}
+
+/* Paragraph + link */
+.container p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.container a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/* ===== HOME PAGE ===== */
+.home-page {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, white, #b8c3c4);
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+  /* override login centering */
+  display: block; 
+  align-items: unset;
+  justify-content: unset;
+}
+
+/* Navbar */
+.home-page .navbar {
+  background: #0097a7;
+  padding: 15px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+/* Search */
+.home-page .search-bar {
+  margin: 20px auto;
+}
+.home-page .search-bar input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Card container */
+.home-page .card-container {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 220px); /* fixed bigger width per button */
+  gap:  30px;  /* more space between buttons */
+  justify-content: space-around;
+  padding: 40px;
+}
+
+/* Buttons */
+.home-page .btn {
+  background: #007b9e;
+  color: white;
+  padding: 20px;        /* bigger button height */
+  border-radius: 12px;  /* smoother rounded corners */
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;      /* larger text */
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.home-page .btn:hover {
+  background: #005f75;
+}
+/* ===== TICKET FORM PAGE ===== */
+.ticket-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  width: 380px;
+  margin: 40px auto;
+  animation: fadeIn 0.8s ease;
+}
+
+.ticket-box h2 {
+  text-align: center;
+  color: #007b9e;
+  margin-bottom: 20px;
+}
+
+.ticket-box .date-time {
+  background: #0097a7;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.ticket-box label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+.ticket-box input,
+.ticket-box select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.3s;
+}
+
+.ticket-box input:focus,
+.ticket-box select:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 5px rgba(37,117,252,0.5);
+}
+
+.ticket-box .payment-box {
+  text-align: center;
+  font-size: 18px;
+  margin: 15px 0;
+  font-weight: bold;
+  color: #444;
+}
+
+.ticket-box .pay-btn {
+  width: 100%;
+  padding: 12px;
+  background: #2575fc;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ticket-box .pay-btn:hover {
+  background: #1b5edb;
+}
+
+/* ===== TICKET LIST PAGE ===== */
+.ticket-list-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.ticket-list-container h2 {
+  color: #007b9e;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.ticket-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  animation: fadeIn 0.8s ease;
+  text-align: left;
+}
+
+.ticket-card p {
+  margin: 6px 0;
+  color: #333;
+}
+
+.ticket-card b {
+  color: #007b9e;
+}
+
+.ticket-list-container a {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: white;
+  background: #0097a7;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.ticket-list-container a:hover {
+  background: #007b9e;
+}
